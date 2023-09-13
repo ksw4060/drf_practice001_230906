@@ -5,22 +5,26 @@ from django.contrib.auth.models import AbstractUser
 
 class UserManager(BaseUserManager):
     # 유저를 생성하는 함수
-    def create_user(self, email, password=None):
+    def create_user(self, email, username, password=None):
 
         if not email:
             raise ValueError('Users must have an email address')
         user = self.model(
             email=self.normalize_email(email),
         )
+        if not username:
+            raise ValueError('Users must have an email address')
+
 
         user.set_password(password)
         user.save(using=self._db)
         return user
-    def create_superuser(self, email, password=None):
+    def create_superuser(self, email, username, password=None):
 
         user = self.create_user(
             email,
             password=password,
+            username=username,
         )
         user.is_admin = True # 슈퍼 유저는 관리자 권한이 있음
         user.save(using=self._db)
@@ -43,7 +47,7 @@ class User(AbstractUser):
     objects = UserManager() #쿼리셋 매니저가 UserManager임을 밝힘
     # USERNAME_FIELD 와 REQUIRED_FIELDS는 유저를 생성할 때, 필요한 필드이기 때문에 create_user 및 create_superuser시 필드를 추가시켜 줘야 함
     USERNAME_FIELD = 'email' # 회원가입시, 계정이름으로 가입하기 때문에, Unique=True 로 해주어야 하는 필드
-    REQUIRED_FIELDS = []
+    REQUIRED_FIELDS = ['username',]
 
 
     def __str__(self):

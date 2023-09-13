@@ -8,6 +8,7 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
     @classmethod
     def get_token(cls, user):
         token = super().get_token(user)
+        token['username'] = user.username
         token['email'] = user.email
         token['username'] = user.username
         return token
@@ -16,7 +17,7 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ("email", "password")
+        fields = ("username", "email", "password")
 
     # 회원가입
     def create(self, validated_data):

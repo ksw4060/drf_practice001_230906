@@ -1,7 +1,7 @@
 # DRF 에 필요한 함수, 클래스 호출
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework import status
+from rest_framework import status, permissions
 from users.serializers import UserSerializer, CustomTokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 from django.shortcuts import render, redirect
@@ -39,3 +39,12 @@ def login(request):
         else:
             return HttpResponse("username 또는 password를 잘못 입력하였거나, 존재하지 않는 아이디 입니다.")
 """
+
+class MockView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+    def get(self, request):
+        print(request.user)
+        user = request.user
+        user.is_admin = True
+        user.save()
+        return Response("get 요청!")
