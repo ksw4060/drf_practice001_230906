@@ -34,7 +34,7 @@ class UserManager(BaseUserManager):
 class User(AbstractUser):
     # 메타 클래스는, DB 정보들에 대한 정보를 입력하는 곳
     class Meta:
-        db_table = "usermodel"
+        db_table = "User"
 
     email = models.EmailField(verbose_name='이메일', max_length=255, unique=True)
     username = models.CharField("글 작성자", null=True, blank=True, max_length=50)

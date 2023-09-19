@@ -22,7 +22,7 @@ class ArticleCreateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Article
-        fields = ['id', 'title', 'content', 'user']
+        fields = ['id', 'title', 'content', 'user', 'uploaded_image']
         # blank = True 인 경우, serializer 에서 빈 값들에 대한 에러 메시지를 지정해줄 수 있음.
         extra_kwargs = {
                 "title": {
