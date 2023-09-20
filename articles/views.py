@@ -17,7 +17,7 @@ class ArticleView(APIView):
     def post(self, request):
         serializer = ArticleCreateSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save(user=request.user) # 이거 이렇게 해주면, 게시글을 request.user가 작성한 것이 됨
+            serializer.save(user=request.user) # 이거 이렇게 해주면, article.user == request.user가 됨
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
