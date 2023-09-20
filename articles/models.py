@@ -26,6 +26,7 @@ def rename_imagefile_to_uuid(instance, filename):
 class Article(models.Model):
     class Meta:
         db_table = "article"
+        ordering = ["-updated_at"]
 
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="article_user")
     title = models.CharField(max_length=50, blank=False, null=False, verbose_name="게시글 제목")
@@ -36,8 +37,23 @@ class Article(models.Model):
     uploaded_image = models.ImageField(
         upload_to=rename_imagefile_to_uuid, verbose_name="업로드이미지", blank=True, null=True
     )
+    likes = models.ManyToManyField(User, blank=True, related_name="article_likes")
+
     def __str__(self):
             return str(self.title)
 
     def get_absolute_url(self):
         return reverse('article_detail_view', kwargs={"article_id":self.pk}) # 까묵지 말제이~~??
+
+class Comment(models.Model):
+    class Meta:
+        db_table = "comment"
+        ordering = ["-created_at"]  # 댓글 최신순 정렬
+
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="comment_user")
+    article = models.ForeignKey(Article, on_delete=models.CASCADE, related_name="comment_article")
+    comment = models.TextField("게시글 댓글내용", blank=True, null=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return str(self.comment)

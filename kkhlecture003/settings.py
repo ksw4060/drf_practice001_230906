@@ -64,7 +64,10 @@ MIDDLEWARE = [
 REST_FRAMEWORK = { # simple_jwt 인증 클래스
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
-    )
+    ),
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.AllowAny',
+    ]
 }
 
 ROOT_URLCONF = 'kkhlecture003.urls'

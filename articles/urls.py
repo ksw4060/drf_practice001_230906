@@ -20,4 +20,10 @@ from articles import views
 urlpatterns = [
     path('', views.ArticleView.as_view(), name='article_view'),
     path('<int:article_id>/', views.ArticleDetailView.as_view(), name='article_detail_view'),
+
+    # 댓글 CommentView, CommentDetailView
+    path('<int:article_id>/comment/', views.CommentView.as_view(), name='comment_view'),
+    path('<int:article_id>/comment/<int:comment_id>/', views.CommentDetailView.as_view(), name='comment_detail_view'),
+    # 좋아요/좋아요 취소
+    path('<int:article_id>/like/', views.LikeArticleView.as_view(), name='like_view'),
 ]
