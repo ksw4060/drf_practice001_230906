@@ -52,7 +52,7 @@ class Comment(models.Model):
 
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="comment_user")
     article = models.ForeignKey(Article, on_delete=models.CASCADE, related_name="comment_article")
-    comment = models.TextField("게시글 댓글내용", blank=True, null=False)
+    comment = models.TextField("게시글 댓글내용", blank=False, null=False)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
