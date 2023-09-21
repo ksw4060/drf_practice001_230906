@@ -64,7 +64,7 @@ class CommentView(APIView):
         serializer = CommentCreateSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save(user=request.user, article_id=article_id)
-            return Response(serializer.data, status=status.HTTP_200_OK)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 # 특정 댓글 수정, 삭제하기
